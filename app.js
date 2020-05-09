@@ -1,7 +1,7 @@
 let c = document.createElement('canvas');
 let ctx = c.getContext('2d');
-c.width = 500;
-c.height =350;
+c.width = 800;
+c.height =600;
 
 document.body.appendChild(c);
 
@@ -20,7 +20,43 @@ let noise = x => {
     return lerp(perm[Math.floor(x)],perm[Math.ceil(x)],x - Math.floor(x));
 }
 
+let player = new function() {
+    this.x = c.width / 2
+    this.y = 0;
+    this.ySpeed = 0;
+    this.rot =0;
+
+    this.img = new Image();
+    this.img.src ="images/moto01.png";
+
+    this.draw = function() {
+        let p1 = c.height - noise(t + this.x)*0.25;
+        let p2 = c.height - noise(t + 5+ this.x)*0.25;
+
+
+
+        if(p1 - 15 > this.y){
+            this.ySpeed +=0.1;
+        }else{
+            this.ySpeed -= this.y - (p1 -15);
+            this.y = p1 - 15;
+        }
+
+        this.y += this.ySpeed;
+
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.drawImage(this.img, -15, -15, 30, 30);
+
+        ctx.restore();
+    }
+}
+
+
+let t = 0;
 function loop() {
+
+    t += 5;
     ctx.fillStyle = '#19f';
     ctx.fillRect(0,0,c.width,c.height);
     
@@ -31,12 +67,14 @@ function loop() {
     ctx.moveTo(0,c.height)
 
     for (let i = 0; i < c.width; i++){
-        ctx.lineTo(i,c.height - noise(i)*0.25);
+        ctx.lineTo(i,c.height - noise(t + i)*0.25);
     }
 
     ctx.lineTo(c.width,c.height);
 
     ctx.fill();
+
+    player.draw();
     requestAnimationFrame(loop);
 }
 
