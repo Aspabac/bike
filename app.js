@@ -1,7 +1,7 @@
 let c = document.createElement('canvas');
 let ctx = c.getContext('2d');
-c.width = 800;
-c.height = 400;
+c.width = 1200;
+c.height = 700;
 
 document.body.appendChild(c);
 
