@@ -26,15 +26,17 @@ let player = new function() {
     this.ySpeed = 0;
     this.rot =0;
     this.rSpeed =0;
+    
 
     this.img = new Image();
-    this.img.src ="images/moto01.png";
+    this.img.src ="images/moto02.png";
 
     this.draw = function() {
         let p1 = c.height - noise(t + this.x)*0.25;
         let p2 = c.height - noise(t + 5+ this.x)*0.25;
 
         let grounded = 0
+        
 
         if(p1 - 15 > this.y){
             this.ySpeed +=0.1;
@@ -51,6 +53,7 @@ let player = new function() {
             this.rSpeed =5;
             k.ArrowUp = 1;
             this.x -= speed *5;
+            
         }
 
         let angle = Math.atan2((p2 - 15) - this.y, (this.x + 5) -this.x);
@@ -66,7 +69,7 @@ let player = new function() {
           }
       
        
-        this.rSpeed += (k.ArrowLeft - k.ArrowRight) * 0.5;
+        this.rSpeed += (k.ArrowLeft - k.ArrowRight) * 0.05;
         this.rot -= this.rSpeed * 0.1 ;
 
         if(this.rot > Math.PI)this.rot = -Math.PI;
@@ -91,7 +94,8 @@ let k = {ArrowUp:0, ArrowDown:0, ArrowLeft:0, ArrowRight:0};
 function loop() {
     speed -= (speed - (k.ArrowUp - k.ArrowDown)) *0.1;
     t += 10 *speed;
-    ctx.fillStyle = '#19f';
+    ctx.fillStyle = '#ffffff';
+    // context.strokeStyle = 'black';
     ctx.fillRect(0,0,c.width,c.height);
     
 
